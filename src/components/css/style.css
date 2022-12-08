@@ -234,3 +234,13 @@ label {
 .modal-body{
   padding: 50px;
 }
+.profile-parent{
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+img{
+  border: solid 1px #eaeaea;
+  border-radius: 50%;
+
+}

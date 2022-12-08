@@ -51,6 +51,7 @@ const EmployeeTable = () => {
             <thead>
               <tr>
                 <th>S.No</th>
+                <th>Picture</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Edit</th>
@@ -64,14 +65,16 @@ const EmployeeTable = () => {
               {addEmployee.filter((employee) => {
                 if (search === "") {
                   return employee
-                } else if (employee?.personal_details?.first_name.toLowerCase().includes(search.toLowerCase()) || employee?.personal_details?.last_name.toLowerCase().includes(search.toLowerCase())) {
+                } else if (employee?.personal_details?.first_name.toLowerCase().includes(search.toLowerCase()) || employee?.personal_details?.last_name.toLowerCase().includes(search.toLowerCase()))
+                 {
                   return employee
                 }
               }).map((employee) => {
                 return (
-                  <tr key={employee.id}>
-                    <td>{employee.id}</td>
-                    <td>{employee.personal_details?.first_name}</td>
+                  <tr key={employee?.id}>
+                    <td>{employee?.id}</td>
+                    <td>{employee?.personal_details?.profile_photo? <img src={employee?.personal_details?.profile_photo} width="50px" height="50px" style={{borderRadius:"50px"}}/> : <img src="https://www.shareicon.net/data/512x512/2016/07/26/802026_man_512x512.png" className='profile-pic' width="50px" height="50px" />}</td>
+                    <td>{employee?.personal_details?.first_name}</td>
                     <td >{employee?.personal_details?.last_name}</td>
                     <td><button type="submit" onClick={() => editEmployee(employee.id)} className='btn btn-success py-1 px-4' >Edit</button></td>
                     <td><button onClick={() => deleteEmployee(employee.id)} data-bs-toggle={show ? "modal" : null} data-bs-target={show ? "#myModal" : null} type="submit" className='btn btn-danger py-1 px-4'>Delete</button>
@@ -84,7 +87,6 @@ const EmployeeTable = () => {
                               <button onClick={confirmDelete} type="button" className="btn btn-danger py-1 px-4" data-bs-dismiss="modal">Yes</button>&nbsp;
                               <button type="button" className="btn my-btn-basic py-1 px-4" data-bs-dismiss="modal">No</button>
                             </div>
-
                           </div>
                         </div>
                       </div>

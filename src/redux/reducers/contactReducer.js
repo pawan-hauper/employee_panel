@@ -2,6 +2,7 @@ const initialState = {
     selectedId: 0, list: [
         {
             id: 1, personal_details: {
+                profile_photo:"",
                 first_name: "Jatin",
                 last_name: "Parmar",
                 email: "jatin.parmar@hauper.com",
@@ -35,6 +36,7 @@ const initialState = {
         {
 
             id: 2, personal_details: {
+                profile_photo:"",
                 first_name: "Pawan",
                 last_name: "Vishwakarma",
                 email: "pawan.vishwakarma@hauper.com",
@@ -67,6 +69,7 @@ const initialState = {
         },
         {
             id: 3, personal_details: {
+                profile_photo:"",
                 first_name: "Firoz",
                 last_name: "Hussain",
                 email: "pawan.vishwakarma@hauper.com",

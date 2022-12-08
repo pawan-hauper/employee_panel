@@ -12,6 +12,7 @@ const EmployeeDetail = () => {
     const employee_obj = {
         id: 0,
         personal_details: {
+            profile_photo: "",
             first_name: "",
             last_name: "",
             email: "",
@@ -54,10 +55,13 @@ const EmployeeDetail = () => {
         const { name, value } = e.target
         setPerosnalDetail((preValue) => {
             let new_value = { ...preValue };
-            new_value[key][name] = value;
+            if (name === 'profile_photo') {
+                new_value[key][name] = URL.createObjectURL(e.target.files[0]);
+            } else {
+                new_value[key][name] = value;
+            }
             return new_value;
         })
-
         console.log(personalDetail)
 
     }
@@ -67,8 +71,8 @@ const EmployeeDetail = () => {
 
     const validations = (type) => {
         let valid = true;
-        if (type ==='personal_details') {
-            if (!personalDetail[type]?.first_name || !personalDetail[type]?.last_name || !personalDetail[type]?.email || !personalDetail[type]?.phone || !personalDetail[type]?.birthday || !personalDetail[type]?.gender) {
+        if (type === 'personal_details') {
+            if (!personalDetail[type]?.profile_photo || !personalDetail[type]?.first_name || !personalDetail[type]?.last_name || !personalDetail[type]?.email || !personalDetail[type]?.phone || !personalDetail[type]?.birthday || !personalDetail[type]?.gender) {
                 valid = false;
             }
 
@@ -85,7 +89,7 @@ const EmployeeDetail = () => {
                 valid = false;
 
             }
-                
+
 
         }
 
@@ -100,6 +104,7 @@ const EmployeeDetail = () => {
 
 
         const data = { ...personalDetail };
+
         if (data.id > 0) {
             dispatch({ type: "UPDATE_EMPLOYEE", payload: data })
             toast.success("Employee Updated", {
@@ -116,7 +121,7 @@ const EmployeeDetail = () => {
         }
 
         dispatch({ type: "SET_EDIT_EMPLOYEE", payload: 0 })
-        setPerosnalDetail(JSON.parse(JSON.stringify(employee_obj) ) )
+        setPerosnalDetail(JSON.parse(JSON.stringify(employee_obj)))
         setSelectedType('personal_details')
 
 
@@ -130,7 +135,7 @@ const EmployeeDetail = () => {
                 selectedData = value;
             }
         })
-        setPerosnalDetail(JSON.parse(JSON.stringify(selectedData) ) )
+        setPerosnalDetail(JSON.parse(JSON.stringify(selectedData)))
         setSelectedType('personal_details')
     }, [globleState.selectedId])
 
@@ -146,9 +151,9 @@ const EmployeeDetail = () => {
                             {
                                 selectedType == 'bank_details' ?
                                     <div className="form-section mb-3">
-                                    <form>
+                                        <form>
                                             <div className="three ml-5 mb-3">
-                                            {globleState.selectedId > 0 ? <h1>Edit Bank Detail <span className='form-serial-no'>4/4</span></h1> : <h1>Bank Detail <span className='form-serial-no'>4/4</span></h1> }
+                                                {globleState.selectedId > 0 ? <h1>Edit Bank Detail <span className='form-serial-no'>4/4</span></h1> : <h1>Bank Detail <span className='form-serial-no'>4/4</span></h1>}
                                             </div>
                                             <div className="row">
                                                 <div className="col-lg-12 col-md-6 col-sm-6 col-xs-12">
@@ -193,7 +198,8 @@ const EmployeeDetail = () => {
                                             <div className="row">
                                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 submit">
                                                     <button onClick={() => validations('bank_details') ? submitPersonalDetail() : null} type='button' className='btn btn-success mt-3  py-1 px-4'>Submit</button>
-
+                                                    &nbsp;&nbsp;
+                                                    <button type='button' className='btn my-btn-basic py-1 px-4 mt-3' onClick={() => setSelectedType('education_details')}>Back</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -206,7 +212,7 @@ const EmployeeDetail = () => {
                                 <div className="form-section">
                                     <form>
                                         <div className="three ml-5 mb-3">
-                                        {globleState.selectedId > 0 ? <h1>Edit Education Detail <span className='form-serial-no'>3/4</span></h1> : <h1>Education Detail <span className='form-serial-no'>3/4</span></h1> }
+                                            {globleState.selectedId > 0 ? <h1>Edit Education Detail <span className='form-serial-no'>3/4</span></h1> : <h1>Education Detail <span className='form-serial-no'>3/4</span></h1>}
                                         </div><div className="row">
                                             <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                 <div className="form-group mb-2">
@@ -256,7 +262,8 @@ const EmployeeDetail = () => {
                                         </div>
                                         <div className="row">
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 submit">
-                                                <button onClick={() => validations('education_details') ? setSelectedType('bank_details') : null} type='button' className='btn btn-success mt-3  py-1 px-4'>Next</button>
+                                                <button onClick={() => validations('education_details') ? setSelectedType('bank_details') : null} type='button' className='btn btn-success mt-2  py-1 px-4'>Next</button>&nbsp;&nbsp;
+                                                <button type='button' className='btn my-btn-basic py-1 px-4 mt-3' onClick={() => setSelectedType('company_details')}>Back</button>
                                             </div>
                                         </div>
                                     </form>
@@ -268,7 +275,7 @@ const EmployeeDetail = () => {
 
                                 <div className='form-section experience_form'>
                                     <div className="three ml-5 mb-3">
-                                    {globleState.selectedId > 0 ? <h1>Edit Experience Detail <span className='form-serial-no'>2/4</span></h1> : <h1>Experience Detail <span className='form-serial-no'>2/4</span></h1> }
+                                        {globleState.selectedId > 0 ? <h1>Edit Experience Detail <span className='form-serial-no'>2/4</span></h1> : <h1>Experience Detail <span className='form-serial-no'>2/4</span></h1>}
                                     </div><div className="row">
                                         <div className="col-lg-12 col-md-6 col-sm-6 col-xs-12">
                                             <div className="form-group mb-2">
@@ -312,7 +319,8 @@ const EmployeeDetail = () => {
                                     <div className="row">
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 submit">
 
-                                            <button onClick={() => validations('company_details') ? setSelectedType('education_details') : null} type='button' className='btn btn-success mt-3  py-1 px-4'>Next</button>
+                                            <button onClick={() => validations('company_details') ? setSelectedType('education_details') : null} type='button' className='btn btn-success mt-3  py-1 px-4'>Next</button>&nbsp;&nbsp;
+                                            <button type='button' className='btn my-btn-basic py-1 px-4 mt-3' onClick={() => setSelectedType('personal_details')}>Back</button>
 
                                         </div>
                                     </div>
@@ -326,8 +334,21 @@ const EmployeeDetail = () => {
                                 <div className="form-section">
                                     <form>
                                         <div className="three ml-5 mb-3">
-                                        {globleState.selectedId > 0 ? <h1>Edit Personal Detail <span className='form-serial-no'>1/4</span></h1> : <h1>Personal Detail <span className='form-serial-no'>1/4</span></h1> }
-                                        </div><div className="row">
+                                            {globleState.selectedId > 0 ? <h1>Edit Personal Detail <span className='form-serial-no'>1/4</span></h1> : <h1>Personal Detail <span className='form-serial-no'>1/4</span></h1>}
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-md-6 mt-4 mb-3">
+                                                <label>Profile Photo:</label>
+                                                <input onChange={(e) => personalDetailFields(e, 'personal_details')} type="file" name="profile_photo" className='form-control' />
+                                            </div>
+                                            <div className="col-md-6 profile-parent mt-2">
+                                                {personalDetail?.personal_details?.profile_photo ? <img src={personalDetail?.personal_details?.profile_photo} className='profile-pic' width="100px" height="100px" /> : <img src="https://www.shareicon.net/data/512x512/2016/07/26/802026_man_512x512.png" className='profile-pic' width="100px" height="100px" />}
+
+                                            </div>
+                                        </div>
+
+
+                                        <div className="row">
                                             <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                 <div className="form-group mb-2">
                                                     <label>First Name:</label>
