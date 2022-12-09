@@ -107,39 +107,22 @@ const EmployeeTable = () => {
                   return employee
                 } else if (
                   employee?.personal_details?.first_name?.toLowerCase().includes(search.toLowerCase()) ||
-
                   employee?.personal_details?.last_name?.toLowerCase().includes(search.toLowerCase()) ||
-
                   employee?.personal_details?.email?.toLowerCase().includes(search.toLowerCase()) ||
-
                   employee?.personal_details?.birthday.includes(search.toLowerCase()) ||
-
                   employee?.company_details?.company_name.toLowerCase().includes(search.toLowerCase()) ||
-
                   employee?.company_details?.company_location.toLowerCase().includes(search.toLowerCase()) ||
-
                   employee?.company_details?.designation.toLowerCase().includes(search.toLowerCase()) ||
-
                   employee?.company_details?.start_working_date.includes(search.toLowerCase()) ||
-
                   employee?.company_details?.end_working_date.includes(search.toLowerCase()) ||
-
                   employee?.education_details?.university_name.toLowerCase().includes(search.toLowerCase()) ||
-
                   employee?.education_details?.degree_name.toLowerCase().includes(search.toLowerCase()) ||
-
                   employee?.education_details?.admission_date.includes(search.toLowerCase()) ||
-
                   employee?.education_details?.passout_date.includes(search.toLowerCase()) ||
-
                   employee?.education_details?.grade.toLowerCase().includes(search.toLowerCase()) ||
-
                   employee?.education_details?.what_you_learnt.toLowerCase().includes(search.toLowerCase()) || 
-
                   employee?.bank_details?.account_holder_name.toLowerCase().includes(search.toLowerCase()) ||
-
                   employee?.bank_details?.bank_name.toLowerCase().includes(search.toLowerCase()) ||
-                  
                   employee?.bank_details?.ifsc_code.toLowerCase().includes(search.toLowerCase())           
                   )
                   return employee
