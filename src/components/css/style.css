@@ -244,3 +244,17 @@ img{
   border-radius: 50%;
 
 }
+.pagination{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+.pagination button{
+  margin: 0px 15px;
+  font-size: 18px;
+}
+.btn-current-page{
+  background: #eaeaea;
+  cursor:alias Im !important;
+}

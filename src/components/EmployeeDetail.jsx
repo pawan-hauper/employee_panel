@@ -72,7 +72,7 @@ const EmployeeDetail = () => {
     const validations = (type) => {
         let valid = true;
         if (type === 'personal_details') {
-            if (!personalDetail[type]?.profile_photo || !personalDetail[type]?.first_name || !personalDetail[type]?.last_name || !personalDetail[type]?.email || !personalDetail[type]?.phone || !personalDetail[type]?.birthday || !personalDetail[type]?.gender) {
+            if (!personalDetail[type]?.first_name || !personalDetail[type]?.last_name || !personalDetail[type]?.email || !personalDetail[type]?.phone || !personalDetail[type]?.birthday || !personalDetail[type]?.gender) {
                 valid = false;
             }
 
@@ -149,7 +149,7 @@ const EmployeeDetail = () => {
                         <div>
 
                             {
-                                selectedType == 'bank_details' ?
+                                selectedType === 'bank_details' ?
                                     <div className="form-section mb-3">
                                         <form>
                                             <div className="three ml-5 mb-3">
@@ -208,7 +208,7 @@ const EmployeeDetail = () => {
 
 
 
-                            {selectedType == 'education_details' ?
+                            {selectedType === 'education_details' ?
                                 <div className="form-section">
                                     <form>
                                         <div className="three ml-5 mb-3">
@@ -271,7 +271,7 @@ const EmployeeDetail = () => {
                             }
 
 
-                            {selectedType == 'company_details' ?
+                            {selectedType === 'company_details' ?
 
                                 <div className='form-section experience_form'>
                                     <div className="three ml-5 mb-3">
@@ -330,7 +330,7 @@ const EmployeeDetail = () => {
                             }
 
 
-                            {selectedType == 'personal_details' ?
+                            {selectedType === 'personal_details' ?
                                 <div className="form-section">
                                     <form>
                                         <div className="three ml-5 mb-3">
