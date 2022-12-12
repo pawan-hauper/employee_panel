@@ -39,7 +39,7 @@ const initialState = {
                 profile_photo:"",
                 first_name: "Pawan",
                 last_name: "Vishwakarma",
-                email: "pawan.vishwakarma@hauper.com",
+                email: "pspwn23@gmail.com",
                 phone: 1213,
                 birthday: "1998-08-23",
                 gender: "Male"

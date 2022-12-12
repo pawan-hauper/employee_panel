@@ -3,49 +3,51 @@ import 'react-toastify/dist/ReactToastify.css';
 import EmployeeTable from './EmployeeTable'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast, ToastContainer } from 'react-toastify';
+import {number, string, object} from "yup";
 
 
+const employee_obj ={
+    id: 0,
+    personal_details: {
+        profile_photo: "",
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone: "",
+        birthday: "",
+        gender: ""
+    },
+    company_details: {
+        company_name: "",
+        company_location: "",
+        start_working_date: "",
+        end_working_date: "",
+        designation: ""
+    },
+    education_details: {
+        university_name: "",
+        degree_name: "",
+        admission_date: "",
+        passout_date: "",
+        grade: "",
+        what_you_learnt: ""
+    },
+    bank_details: {
+        account_holder_name: "",
+        bank_name: "",
+        account_number: "",
+        confirm_account_number: "",
+        ifsc_code: ""
+    }
+
+};
 
 const EmployeeDetail = () => {
     const globleState = useSelector(state => state);
+    const formValid = object({
 
-    const employee_obj = {
-        id: 0,
-        personal_details: {
-            profile_photo: "",
-            first_name: "",
-            last_name: "",
-            email: "",
-            phone: "",
-            birthday: "",
-            gender: ""
-        },
-        company_details: {
-            company_name: "",
-            company_location: "",
-            start_working_date: "",
-            end_working_date: "",
-            designation: ""
-        },
-        education_details: {
-            university_name: "",
-            degree_name: "",
-            admission_date: "",
-            passout_date: "",
-            grade: "",
-            what_you_learnt: ""
-        },
-        bank_details: {
-            account_holder_name: "",
-            bank_name: "",
-            account_number: "",
-            confirm_account_number: "",
-            ifsc_code: ""
-        }
-
-    };
-
-
+        first_name : string().required("First name is required")
+    })
 
     const [personalDetail, setPerosnalDetail] = useState(employee_obj);
 
@@ -73,7 +75,7 @@ const EmployeeDetail = () => {
         let valid = true;
         if (type === 'personal_details') {
             if (!personalDetail[type]?.first_name || !personalDetail[type]?.last_name || !personalDetail[type]?.email || !personalDetail[type]?.phone || !personalDetail[type]?.birthday || !personalDetail[type]?.gender) {
-                valid = false;
+               valid = false;
             }
 
         } else if (type === 'company_details') {
@@ -158,7 +160,7 @@ const EmployeeDetail = () => {
                                             <div className="row">
                                                 <div className="col-lg-12 col-md-6 col-sm-6 col-xs-12">
                                                     <div className="form-group mb-2">
-                                                        <label >Account Holder Name:</label>
+                                                        <label>Account Holder Name:</label>
                                                         <input onChange={(e) => personalDetailFields(e, 'bank_details')} type="text" value={personalDetail?.bank_details?.account_holder_name} name="account_holder_name" className="form-control" />
                                                     </div>
                                                 </div>
@@ -351,8 +353,8 @@ const EmployeeDetail = () => {
                                         <div className="row">
                                             <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                 <div className="form-group mb-2">
-                                                    <label>First Name:</label>
-                                                    <input onChange={(e) => personalDetailFields(e, 'personal_details')} type="text" name="first_name" value={personalDetail.personal_details?.first_name} className="form-control" required />
+                                                    <label htmlFor='first_name'>First Name:</label>
+                                                    <input onChange={(e) => personalDetailFields(e, 'personal_details')} type="text" name="first_name" value={personalDetail.personal_details?.first_name} className="form-control" id='first_name' />
                                                 </div>
                                             </div>
                                             <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">

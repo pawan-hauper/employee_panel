@@ -244,9 +244,9 @@ img{
   border-radius: 50%;
 
 }
-.pagination{
+.pagination {
+  justify-content: space-between;
   display: flex;
-  justify-content: center;
   align-items: center;
   margin-top: 50px;
 }
@@ -257,4 +257,7 @@ img{
 .btn-current-page{
   background: #eaeaea;
   cursor:alias Im !important;
+}
+.w-8 {
+  width: 12%!important;
 }

@@ -1,5 +1,4 @@
-import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import './css/style.css'
@@ -8,24 +7,44 @@ const EmployeeTable = () => {
 
   const addEmployee = useSelector(state => state.list)
   console.log("addEmployee", addEmployee)
-
+    
   const dispatch = useDispatch();
+  const  [hidePrev, setHidePrev] = useState(true)
+  const  [hideNext, setHideNext] = useState(true)
+
   const [search, setSearch] = useState("");
   const [show, setShow] = useState(false);
   const [getId, setGetId] = useState("")
-  const [isDisable, setIsDisable] = useState(false)
-  const [isDisablePrev, setIsDisablePrev] = useState(false)
-
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage, setRecordPerPage] = useState(5);
   const indexOfLastRecord = currentPage * recordsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
-
   const currentRecords = addEmployee.slice(indexOfFirstRecord, indexOfLastRecord);
   const nPages = Math.ceil(addEmployee.length / recordsPerPage)
   const editEmployee = (id) => {
     dispatch({ type: "SET_EDIT_EMPLOYEE", payload: id })
   }
+
+
+
+  useEffect(() => {
+
+    if(currentPage == 1){
+      setHidePrev(false)
+      setHideNext(true)
+    }else{
+      setHidePrev(true)
+      setHideNext(true)
+    };
+
+    if (currentPage === nPages) {
+      setHideNext(false)      
+    }else{
+      setHideNext(true)
+    }
+  
+  },[currentPage])
+  
 
   const addMoreEmployee = () => {
     dispatch({ type: "SET_EDIT_EMPLOYEE", payload: 0 })
@@ -45,22 +64,15 @@ const EmployeeTable = () => {
 
     if (currentPage !== nPages) {
       setCurrentPage(currentPage + 1)
-      setIsDisablePrev(false)
-
-    } else {
-      setIsDisable(true)
+      setHidePrev(true)      
     }
-
   }
 
   const prevPage = () => {
     if (currentPage !== 1) {
       setCurrentPage(currentPage - 1)
-      setIsDisable(false)
-    } else {
-      setIsDisablePrev(true)
-    }
 
+    }
   }
 
   const searchField = (e) => {
@@ -69,13 +81,14 @@ const EmployeeTable = () => {
       setRecordPerPage(5)
     } else if (search.length === 1) {
       setRecordPerPage(5)
+      setCurrentPage(1)
     } else {
       setRecordPerPage(addEmployee.length)
     }
-    console.log(search)
+   
   }
 
-
+ 
   return (
     <>
       <div className="col-md-12">
@@ -106,24 +119,7 @@ const EmployeeTable = () => {
                 if (search === "") {
                   return employee
                 } else if (
-                  employee?.personal_details?.first_name?.toLowerCase().includes(search.toLowerCase()) ||
-                  employee?.personal_details?.last_name?.toLowerCase().includes(search.toLowerCase()) ||
-                  employee?.personal_details?.email?.toLowerCase().includes(search.toLowerCase()) ||
-                  employee?.personal_details?.birthday.includes(search.toLowerCase()) ||
-                  employee?.company_details?.company_name.toLowerCase().includes(search.toLowerCase()) ||
-                  employee?.company_details?.company_location.toLowerCase().includes(search.toLowerCase()) ||
-                  employee?.company_details?.designation.toLowerCase().includes(search.toLowerCase()) ||
-                  employee?.company_details?.start_working_date.includes(search.toLowerCase()) ||
-                  employee?.company_details?.end_working_date.includes(search.toLowerCase()) ||
-                  employee?.education_details?.university_name.toLowerCase().includes(search.toLowerCase()) ||
-                  employee?.education_details?.degree_name.toLowerCase().includes(search.toLowerCase()) ||
-                  employee?.education_details?.admission_date.includes(search.toLowerCase()) ||
-                  employee?.education_details?.passout_date.includes(search.toLowerCase()) ||
-                  employee?.education_details?.grade.toLowerCase().includes(search.toLowerCase()) ||
-                  employee?.education_details?.what_you_learnt.toLowerCase().includes(search.toLowerCase()) || 
-                  employee?.bank_details?.account_holder_name.toLowerCase().includes(search.toLowerCase()) ||
-                  employee?.bank_details?.bank_name.toLowerCase().includes(search.toLowerCase()) ||
-                  employee?.bank_details?.ifsc_code.toLowerCase().includes(search.toLowerCase())           
+                  JSON.stringify(employee).toLowerCase().includes(search.toLowerCase())         
                   )
                   return employee
                 }).map((employee) => {
@@ -158,9 +154,22 @@ const EmployeeTable = () => {
         </div>
 
         <div className="pagination">
-          <button type="submit" onClick={prevPage} className='btn btn-success py-1 px-4' disabled={isDisablePrev}> <i className="fa-solid fa-chevron-left"></i> Prev</button>
-          <button className='btn btn-current-page'>{currentPage}</button>
-          <button type="submit" onClick={nextPage} className='btn btn-success py-1 px-4' disabled={isDisable}>Next <i className="fa-solid fa-chevron-right"></i></button>
+         <select onChange={(e)=> setRecordPerPage(e.target.value)} className='form-select w-8'>
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+          <option value="25">25</option>
+
+          </select> 
+          <div>
+        {  hidePrev && <button type="submit" onClick={prevPage} className='btn btn-success py-1 px-4'> <i className="fa-solid fa-chevron-left"></i> Prev</button>}
+          
+          <button className='btn btn-current-page'>{currentPage} / {nPages}</button>
+          
+     { hideNext &&  <button type="submit" onClick={nextPage} className='btn btn-success py-1 px-4' >Next <i className="fa-solid fa-chevron-right"></i></button>}
+          </div>
+
         </div>
       </div>
 
