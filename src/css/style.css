@@ -261,3 +261,8 @@ img{
 .w-8 {
   width: 12%!important;
 }
+.form-errors{
+  font-size: 18px !important;
+  color: red !important;
+}
+

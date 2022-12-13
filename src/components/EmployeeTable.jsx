@@ -1,16 +1,15 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import './css/style.css'
 
 const EmployeeTable = () => {
 
   const addEmployee = useSelector(state => state.list)
-  console.log("addEmployee", addEmployee)
-    
+  // console.log("addEmployee", addEmployee)
+
   const dispatch = useDispatch();
-  const  [hidePrev, setHidePrev] = useState(true)
-  const  [hideNext, setHideNext] = useState(true)
+  const [hidePrev, setHidePrev] = useState(true)
+  const [hideNext, setHideNext] = useState(true)
 
   const [search, setSearch] = useState("");
   const [show, setShow] = useState(false);
@@ -29,22 +28,22 @@ const EmployeeTable = () => {
 
   useEffect(() => {
 
-    if(currentPage == 1){
+    if (currentPage == 1) {
       setHidePrev(false)
       setHideNext(true)
-    }else{
+    } else {
       setHidePrev(true)
       setHideNext(true)
     };
 
     if (currentPage === nPages) {
-      setHideNext(false)      
-    }else{
+      setHideNext(false)
+    } else {
       setHideNext(true)
     }
-  
-  },[currentPage])
-  
+
+  }, [currentPage])
+
 
   const addMoreEmployee = () => {
     dispatch({ type: "SET_EDIT_EMPLOYEE", payload: 0 })
@@ -64,7 +63,7 @@ const EmployeeTable = () => {
 
     if (currentPage !== nPages) {
       setCurrentPage(currentPage + 1)
-      setHidePrev(true)      
+      setHidePrev(true)
     }
   }
 
@@ -85,10 +84,10 @@ const EmployeeTable = () => {
     } else {
       setRecordPerPage(addEmployee.length)
     }
-   
+
   }
 
- 
+
   return (
     <>
       <div className="col-md-12">
@@ -119,10 +118,10 @@ const EmployeeTable = () => {
                 if (search === "") {
                   return employee
                 } else if (
-                  JSON.stringify(employee).toLowerCase().includes(search.toLowerCase())         
-                  )
+                  JSON.stringify(employee).toLowerCase().includes(search.toLowerCase())
+                )
                   return employee
-                }).map((employee) => {
+              }).map((employee) => {
                 return (
                   <tr key={employee?.id}>
                     <td>{employee?.id}</td>
@@ -154,20 +153,20 @@ const EmployeeTable = () => {
         </div>
 
         <div className="pagination">
-         <select onChange={(e)=> setRecordPerPage(e.target.value)} className='form-select w-8'>
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="15">15</option>
-          <option value="20">20</option>
-          <option value="25">25</option>
+          <select onChange={(e) => setRecordPerPage(e.target.value)} className='form-select w-8'>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
 
-          </select> 
+          </select>
           <div>
-        {  hidePrev && <button type="submit" onClick={prevPage} className='btn btn-success py-1 px-4'> <i className="fa-solid fa-chevron-left"></i> Prev</button>}
-          
-          <button className='btn btn-current-page'>{currentPage} / {nPages}</button>
-          
-     { hideNext &&  <button type="submit" onClick={nextPage} className='btn btn-success py-1 px-4' >Next <i className="fa-solid fa-chevron-right"></i></button>}
+            {hidePrev && <button type="submit" onClick={prevPage} className='btn btn-success py-1 px-4'> <i className="fa-solid fa-chevron-left"></i> Prev</button>}
+
+            <button className='btn btn-current-page'>{currentPage} / {nPages}</button>
+
+            {hideNext && <button type="submit" onClick={nextPage} className='btn btn-success py-1 px-4' >Next <i className="fa-solid fa-chevron-right"></i></button>}
           </div>
 
         </div>
